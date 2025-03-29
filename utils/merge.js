@@ -38,7 +38,10 @@ async function mergeVideosWithAudio(url1, url2, audioUrl) {
       .outputOptions('-c:v copy', '-c:a aac', '-shortest')
       .save(output)
       .on('end', () => resolve(output))
-      .on('error', reject);
+      .on('error', (err) => {
+  console.error('FFmpeg error:', err.message);
+  reject(err);
+});
   });
 }
 
